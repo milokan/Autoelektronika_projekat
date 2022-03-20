@@ -147,7 +147,7 @@ static void mjerenje_brzine(void* pvParameters)
 		ispis_brzine[7] = (uint16_t)'s';
 		ispis_brzine[8] = (uint16_t)'\n';
 
-		get_LED_BAR(3, &d2);
+		get_LED_BAR(2, &d2);
 
 		if (d2 == (uint8_t)2)
 		{
