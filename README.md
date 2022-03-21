@@ -60,6 +60,6 @@ Pritisnuti prvu diodu od dole u prvom stupcu da bi se na displeju ispisao trenut
 
 Zatim pritisnuti prvu diodu od dole u trećem stupcu, a potom je isključiti da bi se put resetovao.
 
-Za kraj simulirati mjerenje puta 'prosao_put'. Pritisnuti prvu diodu od dole u drugom stupcu, a potom je isključiti. Zasvijetliće četvrta dioda od dole u četvrtom (izlaznom) stupcu. Potom uključiti, a zatim isključiti drugu diodu od dole u tom istom stupcu. Dioda u četvrtom stupcu će se ugasiti čime se označava kraj mjerenja. Nakon toga pritisnuti treću diodu od dole u prvom stupcu da bi se rezultat (stop_put - start_put) prikazao na displeju.
+Za kraj simulirati mjerenje puta 'prosao_put'. Pritisnuti prvu diodu od dole u drugom stupcu, a potom je isključiti. Zasvijetliće četvrta dioda od dole u četvrtom (izlaznom) stupcu. Potom uključiti, a zatim isključiti drugu diodu od dole u tom istom stupcu. Dioda u četvrtom stupcu će se ugasiti čime se označava kraj mjerenja. Rezultat će se prikazati u prozoru programa. Nakon toga pritisnuti treću diodu od dole u prvom stupcu da bi se rezultat (stop_put - start_put) prikazao na displeju.
 
 Navedene akcije nije neophodno odraditi ovim redoslijedom.
