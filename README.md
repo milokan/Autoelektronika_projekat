@@ -44,4 +44,4 @@ Ovaj task vrši ispis podatka o pređenom putu, odnosno njihovo slanje PC-u. Pod
 Ovaj task obrađuje poruku pristiglu sa kanala 1 formata \00OMX\0d. Kao što je već opisano, 00 i 0d u heksadecimalnom formatu predstavljaju početak i kraj poruke. Karakteri O i M označavaju na šta se karakteri odnose, a karakter, odnosno karakteri od interesa su cifre broja X koji predstavlja zadati obim točka. Nakon izvlačenja karaktera oni bivaju prevedeni u odgovarajuću cjelobrojnu vrijednost koja se smješta u globalnu promjenljivu da bi se koristila i u drugim dijelovima koda. I ovaj task čeka na semafor kojeg šalje prekidna rutina kada stigne neki karakter na kanal 1.
 
 ## Uputstvo za simulaciju
-
+Prvo pokrenuti sve periferije na sljedeći način:
