@@ -27,3 +27,21 @@ Ovaj task računa pređeni put na osnovu zadatog obima točka i broja obrtaja po
 
 ### void mjerenje_brzine(void* pvParameters)
 Zadatak ovog taska je računanje brzine kretanja automobila. Takođe se preko reda prima podatak o broju inkremenata koji stižu sa kanala 0 svakih 200ms. Zatim se računa koliko se cm od ukupnog obima točka pređe za jedan inkrement, odnosno svakog inkrementa, tako što se obim podijeli sa 36000, gdje je 36000 maksimalni broj inkremenata enkodera, i rezultat se smješta u promjenljivu 'ink_cm' (formula: ink_cm = (float)obim_tocka / 36000). Na osnovu te vrijednosti izračunava se brzina tako što se ta vrijednost pomnoži sa brojem koji stiže sa kanala 0 svakih 200ms, tj. sa vrijednosšću iz promjenljive 'rec_buf', što zapravo predstavlja mjeru koliko cm se pređe od ukupnog obima za taj konkretan broj inkremenata koji stižu, a to zapravo predstavlja pređen put u 200ms, gdje 200ms predstavlja vrijeme za koje se desi određen broj inkremenata (formula: brzina = (ink_cm * rec_buf) / 0.2). Npr. ako se sa kanala 0 svakih 200ms šalje broj inkremenata 12000 to znači da se točak u 200ms obrne za trećinu obima, odnosno punog obrtaja. Zatim se dalje u task-u vrši ispis podatka o izračunatoj brzini, odnosno slanje podatka PC-u. To se vrši pomoću brojača čijim inkrementovanjem se šalje po jedan karakter datog stringa. Kada se pošalje zadnji karakter brojač se resetuje na 0 i postupak slanja se ponavlja ispočetka. Pošto se originalno šalju podaci o putu, a da se podaci ne bi preklapali i slali istovremeno, uvedena je zaštita tako što se pritiskom na drugu diodu od dole u trećem stupcu obustavlja slanje podatka o putu, a prelazi na slanje podatka o brzini. Isključenjem te diode opet se šalje podatak o putu.
+
+### void led_bar_tsk(void* pvParameters)
+Ovaj task manipuliše radom LED bar-a i ispisom podataka na displej. Pritiskom na prvu diodu od dole u prvom stupcu na displeju se ispisuje trenutni pređen put. Pritiskom na drugu diodu od dole u istom stupcu prikazuje se podatak o brzini kretanja. Pritiskom, a potom isključenjem prve diode od dole u drugom stupcu podatak o trenutnom putu će se upisati u promjenljivu 'start_put'. Dok se ne pritisne druga dioda od dole u istom stupcu svijetliće četvrta dioda od dole u čevrtom stupcu kao indikator da je mjerenje aktivno. Pritiskom, a potom isključenjem druge diode od dole u tom stupcu podatak o trenutnom putu će se upisati u promjenljivu 'stop_put'. Pritiskom na treću diodu od dole u prvom stupcu na displeju će se prikazati razlika ova dva puta (prosao_put = stop_put - start_put).
+
+### void SerialSend_Task0(void* pvParameters)
+Ovaj task svakih 200ms šalje poruku oblika Ixxxxx. u kojoj x-evi predstavljaju broj koji predstavlja inkremente kao odgovor na okidačku poruku koju predstavlja karakter 'i' koji se šalje kanalu 0 serijske. Ovo je omogućeno štikliranjem opcije 'Auto' u prozoru AdvUniCom-a.
+
+### void SerialReceive_Task0(void* pvParameters)
+Ovaj task iz gore primljene poruke izvlači x-eve, odnosno broj inkremenata koji se šalje. Pomoću promjenljive 'cc' se očitavaju primljeni karakteri. Karakteri koji stižu sa kanala 0 se smještaju u niz iz kojeg se izvlače karakteri od interesa koji u ovom slučaju predstavljaju brojeve. Izvučeni karakteri se prevode u cjelobrojnu vrijednost koja se šalje preko reda ostalim taskovima za manipulaciju sa njom. Ovaj task čeka na semafor kojeg će da pošalje prekidna rutina svaki put kada neki karakter stigne na kanal 0.
+
+### void SerialSend_Task1(void* pvParameters)
+Ovaj task vrši ispis podatka o pređenom putu, odnosno njihovo slanje PC-u. Podaci se šalju isto kao i podaci o brzini postupkom opisanim gore.
+
+### void SerialReceive_Task1(void* pvParameters)
+Ovaj task obrađuje poruku pristiglu sa kanala 1 formata \00OMX\0d. Kao što je već opisano, 00 i 0d u heksadecimalnom formatu predstavljaju početak i kraj poruke. Karakteri O i M označavaju na šta se karakteri odnose, a karakter, odnosno karakteri od interesa su cifre broja X koji predstavlja zadati obim točka. Nakon izvlačenja karaktera oni bivaju prevedeni u odgovarajuću cjelobrojnu vrijednost koja se smješta u globalnu promjenljivu da bi se koristila i u drugim dijelovima koda. I ovaj task čeka na semafor kojeg šalje prekidna rutina kada stigne neki karakter na kanal 1.
+
+## Uputstvo za simulaciju
+
